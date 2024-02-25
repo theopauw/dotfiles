@@ -1,0 +1,6 @@
+{
+  "explorer.openAction.strategy":"tab",
+  "explorer.quitOnOpen":true,
+  "explorer.openAction.relativePath":true,
+  "diagnostic.checkCurrentLine":true,
+}

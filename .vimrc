@@ -41,6 +41,10 @@ inoremap (      ()<Left>
 inoremap (<CR>  (<CR>)<Esc>O
 inoremap ((     (
 inoremap ()     ()
+inoremap [      []<Left>
+inoremap [<CR>  [<CR>]<Esc>O
+inoremap [[     [
+inoremap []     []
 inoremap "      ""<Left>
 inoremap ""      "
 
@@ -67,7 +71,7 @@ if ! empty(globpath(&rtp, 'autoload/plug.vim'))
   call plug#begin()
 
   "Plug 'preservim/nerdtree'
-  Plug 'sheerun/vim-polyglot'
+  "Plug 'sheerun/vim-polyglot'
   Plug 'tpope/vim-fugitive'
   "Plug 'vim-airline/vim-airline'
   Plug 'ryanoasis/vim-devicons'
@@ -76,6 +80,7 @@ if ! empty(globpath(&rtp, 'autoload/plug.vim'))
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'EdenEast/nightfox.nvim'
   Plug 'sainnhe/everforest'
+  Plug 'puremourning/vimspector'
 
   call plug#end()
 

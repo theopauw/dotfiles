@@ -9,7 +9,7 @@ shopt -s histappend
 PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 
 # keep more history
-HISTSIZE=500
+HISTSIZE=10000
 HISTFILESIZE=10000
 
 #mkdir and cd at once
@@ -27,6 +27,10 @@ mkcdir ()
 #see https://www.atlassian.com/git/tutorials/dotfiles
 #alias dotfilesgit to run git on these files
 alias dotfilesgit='/usr/bin/git --git-dir=$HOME/.dotfilesgit/ --work-tree=$HOME'
+
+#use gvim -v in stead of vim so we can access clipboard
+#requires vim-x11 on Fedora
+alias vim='gvim -v'
 
 # User specific environment and startup programs
 # Key bindings, up/down arrow searches through history

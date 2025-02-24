@@ -1,6 +1,6 @@
 set nocompatible
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set et
 set number
 set relativenumber
@@ -12,6 +12,11 @@ colo desert
 syntax on
 "redrawing is timing out
 set redrawtime=10000
+set encoding=UTF-8
+
+"oo/OO - add new line without going into insert mode
+nmap oo o<Esc>
+nmap OO O<Esc>
 
 "fold settings
 set foldmethod=syntax
@@ -47,6 +52,14 @@ inoremap [[     [
 inoremap []     []
 inoremap "      ""<Left>
 inoremap ""      "
+inoremap `      ``<Left>
+inoremap ``      `
+
+" Use ctrl-[hjkl] to select the active split!
+nmap <silent> <c-k> :wincmd k<CR>
+nmap <silent> <c-j> :wincmd j<CR>
+nmap <silent> <c-h> :wincmd h<CR>
+nmap <silent> <c-l> :wincmd l<CR>
 
 "matchit - use % to jump html tags
 runtime macros/matchit.vim
@@ -54,6 +67,11 @@ runtime macros/matchit.vim
 "omnicomplete
 filetype plugin on
 set omnifunc=syntaxcomplete#Complete
+
+"gvim hide stuff
+set guioptions-=m  "menu bar
+set guioptions-=T  "toolbar
+set guioptions-=r  "scrollbar
 
 "
 "
@@ -74,15 +92,22 @@ if ! empty(globpath(&rtp, 'autoload/plug.vim'))
   "Plug 'sheerun/vim-polyglot'
   Plug 'tpope/vim-fugitive'
   "Plug 'vim-airline/vim-airline'
-  Plug 'ryanoasis/vim-devicons'
   Plug 'itchyny/lightline.vim'
   Plug 'mattn/emmet-vim'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'EdenEast/nightfox.nvim'
   Plug 'sainnhe/everforest'
   Plug 'puremourning/vimspector'
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+  Plug 'junegunn/fzf.vim'
+  Plug 'ryanoasis/vim-devicons'
+  Plug 'ntpeters/vim-better-whitespace'
 
   call plug#end()
+
+  """""""""""FZF"""""""""""""""""""""""""""""""""""
+  " Enter should open in a new tab by default
+  let g:fzf_action = { 'enter': 'tab split' }
 
   """""""""""NERDTree"""""""""""""""""""""""""""""""""""
   " Start NERDTree and put the cursor back in the other window.
@@ -177,7 +202,6 @@ if ! empty(globpath(&rtp, 'autoload/plug.vim'))
         \ 'git_buffer' : '%{get(b:, "coc_git_status", "")}',
         \ 'mode': '%{lightline#mode()}',
         \ 'vim_logo': "\ue7c5",
-        \ 'filename': '%t',
         \ 'fileformat': '%{&fenc!=#""?&fenc:&enc}[%{&ff}]',
         \ 'modified': '%M',
         \ 'paste': '%{&paste?"PASTE":""}',
@@ -190,6 +214,7 @@ if ! empty(globpath(&rtp, 'autoload/plug.vim'))
   "      \ 'pomodoro': '%{custom#lightline#pomodoro()}',
   let g:lightline.component_function = {
         \ 'devicons_filetype': 'custom#lightline#devicons',
+        \ 'filename': 'LightlineFilename',
         \ 'coc_status': 'custom#lightline#coc_status'
         \ }
   let g:lightline.component_expand = {
@@ -202,6 +227,18 @@ if ! empty(globpath(&rtp, 'autoload/plug.vim'))
         \ 'linter_warnings': 'warning',
         \ 'linter_errors': 'error'
         \ }
+
+  "get file path relative to git root
+  "note: depends on fugitive
+  "see https://github.com/itchyny/lightline.vim/issues/293
+  function! LightlineFilename()
+    let root = fnamemodify(get(b:, 'git_dir'), ':h')
+    let path = expand('%:p')
+    if path[:len(root)-1] ==# root
+      return path[len(root)+1:]
+    endif
+    return expand('%')
+  endfunction
 
   """""""""""""Prettier (CocInstalled)""""""""""""""""""
   command! -nargs=0 Pr :CocCommand prettier.forceFormatDocument
@@ -373,3 +410,7 @@ if ! empty(globpath(&rtp, 'autoload/plug.vim'))
   " Resume latest coc list
   nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 endif
+" Show trailing whitepace and spaces before a tab:
+" Must be after colo
+":highlight ExtraWhitespace ctermbg=red guibg=red
+":autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/

@@ -23,6 +23,10 @@ mkcdir ()
 . "/data/webgis/asdf/asdf.sh"
 . "/data/webgis/asdf/completions/asdf.bash"
 
+# ls list all files in long format
+alias lsl='ls -al'
+alias lst='ls -alt'
+
 #tracking dotfiles within $HOME from a git repo in $HOME/.dotfilesgit
 #see https://www.atlassian.com/git/tutorials/dotfiles
 #alias dotfilesgit to run git on these files

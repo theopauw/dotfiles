@@ -3,4 +3,6 @@
   "explorer.quitOnOpen":true,
   "explorer.openAction.relativePath":true,
   "diagnostic.checkCurrentLine":true,
+  "diagnostic.virtualText": true,
+  "diagnostic.virtualTextCurrentLineOnly": false
 }

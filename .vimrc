@@ -7,6 +7,8 @@ set relativenumber
 set autoindent
 set incsearch
 set hlsearch
+set nofixeol
+set list
 "will be overridden by everforest if we have vim-plug
 colo desert
 syntax on
